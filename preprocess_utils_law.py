@@ -2,36 +2,32 @@ import MeCab
 import random
 
 class CreateData(object):
-  def __init__(self, corpus_path_en,corpus_path_ja,corpus_path_li, do_shuffle, seed_value, split_percent):
-    self.corpus_path_en = corpus_path_en
-    self.corpus_path_ja = corpus_path_ja
-    self.corpus_path_li = corpus_path_li
+  def __init__(self, corpus_path_source,corpus_path_target, do_shuffle, seed_value, split_percent):
+    self.corpus_path_source = corpus_path_source
+    self.corpus_path_target = corpus_path_target
     self.do_shuffle = do_shuffle
     self.seed_value = seed_value
     self.split_percent = split_percent
     self.index = None
     self.source_data = None
     self.target_data = None
-    self.licence = None
+    #self.licence = None
 
   def read_data(self):
     source_data = []
     target_data = []
-    licence = []
-    with open(self.corpus_path_en, 'r', encoding='utf-8') as f:
+    #licence = []
+    with open(self.corpus_path_source, 'r', encoding='utf-8') as f:
       for row in f:
         source_data.append(row)
-    with open(self.corpus_path_ja, 'r', encoding='utf-8') as f:
+    with open(self.corpus_path_target, 'r', encoding='utf-8') as f:
       for row in f:
         target_data.append(row)
-    with open(self.corpus_path_li, 'r', encoding='utf-8') as f:
-      for row in f:
-        licence.append(row)
 
     self.index = list(range(len(source_data)))
     self.source_data = source_data
     self.target_data = target_data
-    self.licence = licence
+    #self.licence = licence
 
   def shuffle_data(self):
     random.seed(self.seed_value)
@@ -48,12 +44,13 @@ class CreateData(object):
 
     train_source = [self.source_data[i] for i in train_index]
     train_target = [self.target_data[i] for i in train_index]
-    train_licence = [self.licence[i] for i in train_index]
+    #train_licence = [self.licence[i] for i in train_index]
     test_source = [self.source_data[i] for i in test_index]
     test_target = [self.target_data[i] for i in test_index]
-    test_licence = [self.licence[i] for i in test_index]
+    #test_licence = [self.licence[i] for i in test_index]
 
-    return train_source, train_target, test_source, test_target, train_licence, test_licence
+    #return train_source, train_target, test_source, test_target, train_licence, test_licence
+    return train_source, train_target, test_source, test_target
     
     
 class PreprocessData(object):
